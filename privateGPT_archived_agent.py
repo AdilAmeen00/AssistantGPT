@@ -77,7 +77,7 @@ def run_model(query):
         config=model_config,
         offload_folder="offload",
         # quantization_config=bnb_config,
-        llm_int8_enable_fp32_cpu_offload=True,
+        # llm_int8_enable_fp32_cpu_offload=True,
         device_map=device_map
     )
     model.eval()
