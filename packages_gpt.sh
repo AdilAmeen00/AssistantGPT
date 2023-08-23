@@ -7,10 +7,10 @@ sudo apt-get update
 sudo apt-get install -y python3-venv python3-pip git-all sqlite3
 
 # Clone the git repository
-git clone https://github.com/AdilAmeen00/SupportGPT.git
+# git clone https://github.com/AdilAmeen00/SupportGPT.git
 
 # Navigate to the cloned directory (Assuming the requirements.txt is inside the cloned directory)
-cd SupportGPT
+# cd SupportGPT
 
 # Install Python packages
 pip install -r requirements.txt
