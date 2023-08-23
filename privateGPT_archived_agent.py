@@ -77,6 +77,7 @@ def run_model(query):
         model=model, tokenizer=tokenizer,
         return_full_text=True,  # Langchain expects the full text
         task='text-generation',
+        do_sample=True,
         temperature=0.0,  # 'Randomness' of outputs, 0.0 is the min and 1.0 the max
         max_new_tokens=512,  # Max number of tokens to generate in the output
         repetition_penalty=1.1  # Without this, output begins repeating
