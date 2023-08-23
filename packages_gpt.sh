@@ -14,7 +14,7 @@ sudo apt-get install -y python3-venv python3-pip git-all sqlite3
 
 # Install Python packages
 pip install -r requirements.txt
-pip3 install python-dotenv urllib3 chardet xformers chromadb pysqlite3-binary transformers accelerate scipy sentence_transformers flask --ignore-installed blinker==1.4
+pip3 install python-dotenv urllib3 chardet xformers chromadb==0.3.2 pysqlite3-binary transformers accelerate scipy sentence_transformers flask --ignore-installed blinker==1.4
 pip install --upgrade langchain
 
 echo "All packages and dependencies have been installed!"
