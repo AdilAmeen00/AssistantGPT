@@ -30,7 +30,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device:", device)
 print(torch.cuda.get_device_name(0))
 print(torch.cuda.is_available())
-
+torch.cuda.empty_cache()
 load_dotenv()
 
 embeddings_model_name = os.environ.get("EMBEDDINGS_MODEL_NAME")
