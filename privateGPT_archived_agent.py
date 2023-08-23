@@ -66,21 +66,21 @@ def run_model(query):
     # Initialize model configuration and model
     hf_token = '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'
     
-    # model_config = transformers.AutoConfig.from_pretrained(model_id, use_auth_token=hf_token, trust_remote_code=True)
-    config = AutoConfig.from_pretrained("upstage/llama-30b-instruct-2048", trust_remote_code=True)
-    with init_empty_weights():
-        model = AutoModelForCausalLM.from_config(config, trust_remote_code = True)
+    model_config = transformers.AutoConfig.from_pretrained(model_id, use_auth_token=hf_token, trust_remote_code=True)
+    # config = AutoConfig.from_pretrained("upstage/llama-30b-instruct-2048", trust_remote_code=True)
+    # with init_empty_weights():
+    #     model = AutoModelForCausalLM.from_config(config, trust_remote_code = True)
 
-    device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"], dtype="float16")
+    # device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"], dtype="float16")
     
-    device_map["model.decoder.layers.37"] = "disk"
+    # device_map["model.decoder.layers.37"] = "disk"
 
     
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_id,
         trust_remote_code=True,
         torch_dtype=torch.float16,
-        config=config,
+        config=model_config,
         offload_folder="offload",
         offload_state_dict = True,
         # quantization_config=bnb_config,
