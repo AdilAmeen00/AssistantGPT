@@ -20,6 +20,8 @@ from langchain.agents import initialize_agent
 from typing import List
 from transformers import AutoTokenizer, AutoConfig, AutoModelForCausalLM
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from accelerate import infer_auto_device_map, init_empty_weights
+
 
 # This was inserted by me
 import torch
