@@ -21,7 +21,8 @@ from typing import List
 from transformers import AutoTokenizer, AutoConfig, AutoModelForCausalLM
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from accelerate import infer_auto_device_map, init_empty_weights
-
+import os
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb=128'
 
 # This was inserted by me
 import torch
