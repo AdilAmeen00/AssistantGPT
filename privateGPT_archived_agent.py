@@ -18,6 +18,8 @@ from typing import Union
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from typing import List
+from transformers import AutoTokenizer, AutoConfig, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # This was inserted by me
 import torch
