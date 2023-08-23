@@ -78,7 +78,7 @@ def run_model(query):
         return_full_text=True,  # Langchain expects the full text
         task='text-generation',
         do_sample=True,
-        temperature=0.0,  # 'Randomness' of outputs, 0.0 is the min and 1.0 the max
+        temperature=0.1,  # 'Randomness' of outputs, 0.0 is the min and 1.0 the max
         max_new_tokens=512,  # Max number of tokens to generate in the output
         repetition_penalty=1.1  # Without this, output begins repeating
     )
@@ -173,6 +173,7 @@ def run_model(query):
     """
     text_input = prompt_template.replace("{context}", context).replace("{question}", query)
 
+    
 
     # Fetch Context
     llm = HuggingFacePipeline(pipeline=generate_text)
@@ -183,9 +184,9 @@ def run_model(query):
     print("db work ended")
     retriever = db.as_retriever()
     docs = db.similarity_search(query)
-    print(docs)
+    print("-------this is docs",docs)
     contexts = [doc.page_content for doc in docs]
-    
+    print("-------contexts", contexts)
 
     max_section_len = 1000
     separator = "\n"
@@ -212,6 +213,7 @@ def run_model(query):
 
     text_input = prompt_template.replace("{context}", context_str).replace("{question}", query)
 
+    print("-------text input  \n", text_input)
     agent = initialize_agent(tools, 
                          llm, 
                          agent="zero-shot-react-description", 
@@ -220,8 +222,9 @@ def run_model(query):
 
     try:
         # Generate text based on the input query
+        
         answer = agent.run(text_input)
-        print("this is gpt",answer)
+        print("\n ------------    this is gpt\n",answer)
         return answer
     except Exception as e:
         # Handle any exceptions that may occur during the execution of the agent
