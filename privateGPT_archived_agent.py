@@ -63,6 +63,7 @@ def run_model(query):
         model_id,
         trust_remote_code=True,
         config=model_config,
+        offload_folder="offload",
         # quantization_config=bnb_config,
         device_map='auto'
     )
