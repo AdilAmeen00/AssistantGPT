@@ -48,13 +48,13 @@ def run_model(query):
     model_id ='upstage/llama-30b-instruct-2048'
     device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
 
-    # Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
-    # bnb_config = transformers.BitsAndBytesConfig(
-    #     load_in_4bit=True,
-    #     bnb_4bit_quant_type='nf4',
-    #     bnb_4bit_use_double_quant=True,
-    #     bnb_4bit_compute_dtype=bfloat16
-    # )
+    Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
+    bnb_config = transformers.BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type='nf4',
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=bfloat16
+    )
 
     # Initialize model configuration and model
     hf_token = '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'
@@ -64,7 +64,7 @@ def run_model(query):
         trust_remote_code=True,
         config=model_config,
         offload_folder="offload",
-        # quantization_config=bnb_config,
+        quantization_config=bnb_config,
         device_map='auto'
     )
     model.eval()
