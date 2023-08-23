@@ -86,7 +86,7 @@ def run_model(query):
         # offload_state_dict = True,
         # quantization_config=bnb_config,
         # llm_int8_enable_fp32_cpu_offload=True,
-        use_auth_token=hf_token
+        use_auth_token=hf_token,
         device_map='auto'
     )
     model.eval()
@@ -236,16 +236,21 @@ def run_model(query):
     text_input = prompt_template.replace("{context}", context_str).replace("{question}", query)
 
     print("-------text input  \n", text_input)
-    agent = initialize_agent(tools, 
-                         llm, 
-                         agent="zero-shot-react-description", 
-                         verbose=False,
-                         agent_kwargs={"output_parser": parser})
+    # agent = initialize_agent(tools, 
+    #                      llm, 
+    #                      agent="zero-shot-react-description", 
+    #                      verbose=False,
+    #                      agent_kwargs={"output_parser": parser})
+
+    rag_pipeline = RetrievalQA.from_chain_type(
+    llm=llm, chain_type='stuff',
+    retriever=retriever, return_source_documents=False
+    )
 
     try:
         # Generate text based on the input query
-        
-        answer = agent.run(text_input)
+        answer = rag_pipeline(query)
+        # answer = agent.run(text_input)
         print("\n ------------    this is gpt\n",answer)
         return answer
     except Exception as e:
