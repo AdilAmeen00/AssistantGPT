@@ -80,7 +80,7 @@ def run_model(query):
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_id,
         trust_remote_code=True,
-        torch_dtype=torch.float16,
+        # torch_dtype=torch.float16,
         config=model_config,
         # offload_folder="offload",
         # offload_state_dict = True,
