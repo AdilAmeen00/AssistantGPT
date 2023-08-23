@@ -48,7 +48,7 @@ def run_model(query):
     model_id ='upstage/llama-30b-instruct-2048'
     device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
 
-    Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
+    # Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
     bnb_config = transformers.BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type='nf4',
