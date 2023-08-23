@@ -156,8 +156,8 @@ def run_model(query):
     in all AWS Regions where Amazon SageMaker is currently available."""
 
     prompt_template = """Answer the following QUESTION based on the CONTEXT
-    given. If you do not know the answer and the CONTEXT doesn't
-    contain the answer truthfully say "I don't know".
+    given. Answer the questions as if you are providing steps to resolve the issue. If you do not know the answer and the CONTEXT doesn't
+    contain the answer truthfully say "Looks like the issue is complicated. Please escalate this issue to L2 engineers.".
 
     CONTEXT:
     {context}
