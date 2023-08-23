@@ -49,7 +49,8 @@ def run_model(query):
     # small -> upstage/llama-30b-instruct-2048
     # with access -> garage-bAInd/Platypus2-70B-instruct
     #   'meta-llama/Llama-2-70b-chat-hf'
-    model_id ='upstage/llama-30b-instruct-2048'
+    # vicuna -> lmsys/vicuna-13b-delta-v1.1
+    model_id ='lmsys/vicuna-13b-delta-v1.1'
     device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
     
     
