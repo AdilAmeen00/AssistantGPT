@@ -47,7 +47,15 @@ def run_model(query):
     #   'meta-llama/Llama-2-70b-chat-hf'
     model_id ='upstage/llama-30b-instruct-2048'
     device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
+    
+    config = AutoConfig.from_pretrained("upstage/llama-30b-instruct-2048", trust_remote_code=True)
+    with init_empty_weights():
+        model = AutoModelForCausalLM.from_config(config, trust_remote_code = True)
 
+    device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"], dtype="float16")
+    
+    device_map["model.decoder.layers.37"] = "disk"
+    
     # Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
     bnb_config = transformers.BitsAndBytesConfig(
         load_in_4bit=True,
@@ -65,7 +73,7 @@ def run_model(query):
         config=model_config,
         offload_folder="offload",
         quantization_config=bnb_config,
-        device_map='auto'
+        device_map=device_map
     )
     model.eval()
 
