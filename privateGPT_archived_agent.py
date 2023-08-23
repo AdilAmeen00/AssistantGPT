@@ -52,6 +52,20 @@ def run_model(query):
     model_id ='upstage/llama-30b-instruct-2048'
     device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
     
+    
+    
+    # Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
+    # bnb_config = transformers.BitsAndBytesConfig(
+    #     load_in_4bit=True,
+    #     bnb_4bit_quant_type='nf4',
+    #     bnb_4bit_use_double_quant=True,
+    #     bnb_4bit_compute_dtype=bfloat16
+    # )
+
+    # Initialize model configuration and model
+    hf_token = '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'
+    
+    # model_config = transformers.AutoConfig.from_pretrained(model_id, use_auth_token=hf_token, trust_remote_code=True)
     config = AutoConfig.from_pretrained("upstage/llama-30b-instruct-2048", trust_remote_code=True)
     with init_empty_weights():
         model = AutoModelForCausalLM.from_config(config, trust_remote_code = True)
@@ -59,23 +73,15 @@ def run_model(query):
     device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"], dtype="float16")
     
     device_map["model.decoder.layers.37"] = "disk"
-    
-    # Set quantization configuration to load large model with less GPU memory  - Cannot use quantization in Windows
-    bnb_config = transformers.BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type='nf4',
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=bfloat16
-    )
 
-    # Initialize model configuration and model
-    hf_token = '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'
-    model_config = transformers.AutoConfig.from_pretrained(model_id, use_auth_token=hf_token)
+    
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_id,
         trust_remote_code=True,
+        torch_dtype=torch.float16,
         config=model_config,
         offload_folder="offload",
+        offload_state_dict = True
         # quantization_config=bnb_config,
         # llm_int8_enable_fp32_cpu_offload=True,
         device_map=device_map
